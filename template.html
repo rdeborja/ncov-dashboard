@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+        <style>
+            .table-container {
+                padding: 20px 20px;
+            }
+            .bigSpacer {
+                height: 50px;
+            }
+            .smallSpacer {
+                height: 20px;
+            }
+            th {
+                font-size: 12px;
+            }
+            td {
+                font-size: 14px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="table-container" style="width: 100%;">
+            <div class="bigSpacer"></div>
+            <h2>{{ run_name }}</h2>
+            <hr></hr>
+            <div class="smallSpacer"></div>
+            <h3>Summary QC Report</h3>
+            <div class="smallSpacer"></div>
+
+            <table id="example" class="display" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th>Sample</th>
+                        <th>Consensus SNVs</th>
+                        <th>Consensus N</th>
+                        <th>Consensus IUPAC</th>
+                        <th>Variants Indel</th>
+                        <th>Mean Depth</th>
+                        <th>qPCR Ct</th>
+                        <th>Collection Date</th>
+                        <th>Genome Completeness</th>
+                        <th>Lineage</th>
+                        <th>Watch Mutations</th>
+                        <th>QC Pass</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in qc %}
+                    <tr>
+                        <td>{{ item['sample'] }}</td>
+                        <td>{{ item['num_consensus_snvs'] }}</td>
+                        <td>{{ item['num_consensus_n'] }}</td>
+                        <td>{{ item['num_consensus_iupac'] }}</td>
+                        <td>{{ item['num_variants_indel'] }}</td>
+                        <td>{{ item['mean_sequencing_depth'] }}</td>
+                        <td>{{ item['qpcr_ct'] }}</td>
+                        <td>{{ item['collection_date'] }}</td>
+                        <td>{{ item['genome_completeness'] }}</td>
+                        <td>{{ item['lineage'] }}</td>
+                        <td>{{ item['watch_mutations'] }}</td>
+                        <td>{{ item['qc_pass'] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div> 
+    </body>
+
+</html>
+
+<script>
+$(document).ready(function() {
+    $('#example').DataTable( {
+        "pageLength" : 25
+    });
+} );
+</script>
